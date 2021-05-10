@@ -103,11 +103,11 @@ public class Contact {
     }
 
     public void displayContact(){
-        System.out.printf("|| %11s | %20s | %30s | %10s | %11s | %30s | %25s ||",phoneNumber,contactGroup,fullName,gender,dob,address,email);
+        System.out.printf("|| %12s | %20s | %30s | %10s | %11s | %30s | %25s ||",phoneNumber,contactGroup,fullName,gender,dob,address,email);
         System.out.println();
     }
     public void displayContactNonEmail(){
-        System.out.printf("|| %11s | %20s | %30s | %10s | %11s | %30s ||",phoneNumber,contactGroup,fullName,gender,dob,address);
+        System.out.printf("|| %12s | %20s | %30s | %10s | %11s | %30s ||",phoneNumber,contactGroup,fullName,gender,dob,address);
         System.out.println();
     }
 }

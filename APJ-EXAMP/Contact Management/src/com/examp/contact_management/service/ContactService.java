@@ -31,7 +31,8 @@ public class ContactService {
 
     public void searchContact() {
         System.out.println("*-- TÌM KIẾM DANH BẠ --*");
-        System.out.println("N(tìm kiếm theo tên) / P(tìm kiếm theo SĐT) / G(tìm kiếm theo nhóm danh bạ) / khác(thoát). Lựa chọn: ");
+        System.out.println("N(tìm kiếm theo tên) / P(tìm kiếm theo SĐT) / G(tìm kiếm theo nhóm danh bạ) / khác(thoát)");
+        System.out.print("Lựa chọn: ");
         switch (toUpperCase(sc.nextLine())){
             case "N":
                 searchContactByName();
@@ -44,10 +45,10 @@ public class ContactService {
                 break;
             default:
                 System.out.println("Bạn muốn dừng tìm kiếm ?");
-                System.out.println("Enter(thoát) / bất kỳ -> enter (quay lại)");
+                System.out.println("Chọn Y(thoát) / khác(quay lại)");
 
                 switch (toUpperCase(sc.nextLine())){
-                    case "":
+                    case "Y":
                         break;
                     default:
                         searchContact();
@@ -57,25 +58,24 @@ public class ContactService {
 
     public void searchContactByPhoneNumber() {
         boolean check = false;
-        System.out.println("Nhập số ĐT tìm kiếm: ");
+        int count = 0;
+        System.out.println("Nhập số ĐT tìm kiếm(xxx.xxx.xxxx): ");
         String phoneNumber = sc.nextLine();
         for (Contact ct: contactDB.contactList) {
-            if(ct.getPhoneNumber().equals(phoneNumber) || ct.getPhoneNumber().contains(phoneNumber)){
+            if(ct.getPhoneNumber().contains(phoneNumber)){
                 check = true;
-                if(ct.getPhoneNumber().equals(phoneNumber)){
+                count ++;
+                if(count == 1){
                     displayHeader();
-                    ct.displayContact();
-                    break;
                 }
                 ct.displayContact();
-
             }
         }
         if(!check){
             System.out.println("Không tìm thấy số ĐT !");
         }
     }
-
+    // chuyển chuỗi có dấu sang chuỗi không dấu
     public static String removeAccent(String s) {
 
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
@@ -133,7 +133,7 @@ public class ContactService {
     public void deleteContact() {
         boolean check = false;
         System.out.println("---XÓA THÔNG TIN DANH BẠ---");
-        System.out.println("Nhập số ĐT cần xóa: ");
+        System.out.println("Nhập số ĐT cần xóa(xxx.xxx.xxxx): ");
         String phoneNumber = sc.nextLine();
         for (int i = 0; i < contactDB.contactList.size(); i++) {
             if(contactDB.contactList.get(i).getPhoneNumber().equals(phoneNumber)){
@@ -141,7 +141,7 @@ public class ContactService {
                 displayHeader();
                 contactDB.contactList.get(i).displayContact();
                 System.out.println("Bạn muốn xóa số ĐT này ?");
-                System.out.println("Chọn Y(tiếp tục)/bất kỳ (thoát)");
+                System.out.println("Chọn Y(tiếp tục) / khác(thoát)");
                 switch (toUpperCase(sc.nextLine())){
                     case "Y":
                         String temp = contactDB.contactList.get(i).getFullName();
@@ -163,7 +163,7 @@ public class ContactService {
 
     public void updateContact(){
         System.out.println("---SỬA THÔNG TIN DANH BẠ---");
-        System.out.println("Nhập số ĐT cần sửa: ");
+        System.out.println("Nhập số ĐT cần sửa(xxx.xxx.xxxx): ");
         boolean check = false;
         String phoneNumber = sc.nextLine();
         for (Contact ct: contactDB.contactList) {
@@ -229,15 +229,13 @@ public class ContactService {
                     }
                 }
             }
-
         }
-
     }
 
     public String inputPhoneNumber(){
         String phoneNumber;
         do{
-            System.out.println("Nhập SDT: ");
+            System.out.println("Nhập số ĐT(xxx.xxx.xxxx): ");
             phoneNumber = sc.nextLine();
 
         }while (!checkPhoneNumber(phoneNumber) || checkPhoneNumberExists(phoneNumber));
@@ -259,7 +257,7 @@ public class ContactService {
 
 
     public boolean checkPhoneNumber(String phoneNumber){
-        String regex = "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$";
+        String regex = "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])+.+[0-9]{3}+.+[0-9]{4}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.find()? true:false;
@@ -342,7 +340,7 @@ public class ContactService {
             email = sc.nextLine();
             if(checkEmailExists(email)){
                 System.out.println("* Bạn muốn thêm email này ! *");
-                System.out.println("'Y(tiếp tục) / bất kỳ(bỏ qua)'");
+                System.out.println("Y(tiếp tục) / khác(bỏ qua)");
                 switch (toUpperCase(sc.nextLine())){
                     case "Y":
                         break;
@@ -405,12 +403,12 @@ public class ContactService {
 
 
     public void displayHeader(){
-        System.out.printf("|  %11s | %20s | %30s | %10s | %11s | %30s | %25s  |","Số ĐT","Nhóm danh bạ","Họ tên","Giới tính","Ngày sinh","Địa chỉ","Email");
+        System.out.printf("|  %12s | %20s | %30s | %10s | %11s | %30s | %25s  |","Số ĐT","Nhóm danh bạ","Họ tên","Giới tính","Ngày sinh","Địa chỉ","Email");
         System.out.println();
     }
 
     public void displayHeaderNonEmail(){
-        System.out.printf("|  %11s | %20s | %30s | %10s | %11s | %30s  |","Số ĐT","Nhóm danh bạ","Họ tên","Giới tính","Ngày sinh","Địa chỉ");
+        System.out.printf("|  %12s | %20s | %30s | %10s | %11s | %30s  |","Số ĐT","Nhóm danh bạ","Họ tên","Giới tính","Ngày sinh","Địa chỉ");
         System.out.println();
     }
 
