@@ -56,6 +56,30 @@ public class ContactService {
         }
     }
 
+    public void search1Contact(){
+        System.out.println("*-- TÌM KIẾM DANH BẠ --*");
+        System.out.println("Nhập chuỗi tìm kiếm (tên hoặc nhóm hoặc SĐT hoặc email): ");
+        boolean check = false;
+        int count = 0;
+        String string = removeAccent(toLowerCase(sc.nextLine()));
+        for (Contact ct: contactDB.contactList) {
+            String tempName = removeAccent(toLowerCase(ct.getFullName()));
+            String tempPhone = ct.getPhoneNumber();
+            String tempGroup = removeAccent(toLowerCase(ct.getContactGroup()));
+            String tempEmail = ct.getEmail();
+            if(tempName.contains(string) || tempPhone.contains(string) || tempGroup.contains(string) || tempEmail.contains(string)){
+                check = true;
+                if(++count == 1){
+                    displayHeader();
+                }
+                ct.displayContact();
+            }
+        }
+        if(!check){
+            System.out.println("Không tìm thấy trong danh bạ !");
+        }
+    }
+
     public void searchContactByPhoneNumber() {
         boolean check = false;
         int count = 0;
@@ -64,8 +88,7 @@ public class ContactService {
         for (Contact ct: contactDB.contactList) {
             if(ct.getPhoneNumber().contains(phoneNumber)){
                 check = true;
-                count ++;
-                if(count == 1){
+                if(++count == 1){
                     displayHeader();
                 }
                 ct.displayContact();
@@ -75,12 +98,14 @@ public class ContactService {
             System.out.println("Không tìm thấy số ĐT !");
         }
     }
+
+
     // chuyển chuỗi có dấu sang chuỗi không dấu
-    public static String removeAccent(String s) {
+    public String removeAccent(String s) {
 
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(temp).replaceAll("");
+        return pattern.matcher(temp).replaceAll("").replace('đ','d').replace('Đ','D');
     }
 
 
@@ -132,7 +157,7 @@ public class ContactService {
 
     public void deleteContact() {
         boolean check = false;
-        System.out.println("---XÓA THÔNG TIN DANH BẠ---");
+        System.out.println("*--XÓA THÔNG TIN DANH BẠ--*");
         System.out.println("Nhập số ĐT cần xóa(xxx.xxx.xxxx): ");
         String phoneNumber = sc.nextLine();
         for (int i = 0; i < contactDB.contactList.size(); i++) {
@@ -162,7 +187,7 @@ public class ContactService {
 
 
     public void updateContact(){
-        System.out.println("---SỬA THÔNG TIN DANH BẠ---");
+        System.out.println("*--SỬA THÔNG TIN DANH BẠ--*");
         System.out.println("Nhập số ĐT cần sửa(xxx.xxx.xxxx): ");
         boolean check = false;
         String phoneNumber = sc.nextLine();
@@ -172,6 +197,7 @@ public class ContactService {
                 ct.setContactGroup(inputContactGroup());
                 ct.setFullName(inputName());
                 ct.setDob(inputDOB());
+                ct.setGender(inputGender());
                 ct.setAddress(inputAddress());
                 ct.setEmail(inputEmail());
                 displayHeader();
@@ -189,7 +215,7 @@ public class ContactService {
 
 
     public void addContact() {
-        System.out.println("---THÊM MỚI DANH BẠ---");
+        System.out.println("*--THÊM MỚI DANH BẠ--*");
         String phoneNumber = inputPhoneNumber();
         String name = inputName();
         String contactGroup = inputContactGroup();
@@ -218,7 +244,7 @@ public class ContactService {
                 if(i==0 || (i)%5 != 0 ){
                     contactDB.contactList.get(i).displayContactNonEmail();
                 }else {
-                    System.out.print("Nhấn enter để xem tiếp ");
+                    System.out.print("Nhấn enter để xem tiếp... ");
                     switch (sc.nextLine()){
                         case "":
                             displayHeaderNonEmail();
@@ -237,7 +263,6 @@ public class ContactService {
         do{
             System.out.println("Nhập số ĐT(xxx.xxx.xxxx): ");
             phoneNumber = sc.nextLine();
-
         }while (!checkPhoneNumber(phoneNumber) || checkPhoneNumberExists(phoneNumber));
 
         return phoneNumber;
@@ -253,7 +278,6 @@ public class ContactService {
         }
         return false;
     }
-
 
 
     public boolean checkPhoneNumber(String phoneNumber){
@@ -365,7 +389,7 @@ public class ContactService {
 
 
     public boolean checkEmail(String email){
-        String regex = "^[a-zA-Z]+[a-zA-Z0-9]*@{1}+[\\w+mail]|[outlook]+.com$";
+        String regex = "^[a-zA-Z]+[a-zA-Z0-9]*@{1}+(([\\w+mail]|[outlook]+.com)|codegym.vn)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.find()? true:false;

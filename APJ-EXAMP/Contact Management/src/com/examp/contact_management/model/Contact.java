@@ -13,15 +13,6 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String phoneNumber, String contactGroup, String fullName, String gender, String dob, String address, String email) {
-        this.phoneNumber = phoneNumber;
-        this.contactGroup = contactGroup;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.address = address;
-        this.dob = dob;
-        this.email = email;
-    }
 
     public Contact(int rollNo, String phoneNumber, String contactGroup, String fullName, String gender,String dob, String address, String email) {
         this.rollNo = rollNo;

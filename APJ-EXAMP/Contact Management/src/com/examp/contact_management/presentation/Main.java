@@ -59,7 +59,7 @@ public class Main {
                 chooseYN();
                 break;
             case "5":
-                contactService.searchContact();
+                contactService.search1Contact();
                 chooseYN();
                 break;
             case "6":
