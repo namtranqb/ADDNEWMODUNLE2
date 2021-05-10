@@ -29,34 +29,9 @@ public class ContactService {
         }
     }
 
-    public void searchContact() {
-        System.out.println("*-- TÌM KIẾM DANH BẠ --*");
-        System.out.println("N(tìm kiếm theo tên) / P(tìm kiếm theo SĐT) / G(tìm kiếm theo nhóm danh bạ) / khác(thoát)");
-        System.out.print("Lựa chọn: ");
-        switch (toUpperCase(sc.nextLine())){
-            case "N":
-                searchContactByName();
-                break;
-            case "P":
-                searchContactByPhoneNumber();
-                break;
-            case "G":
-                searchContactByGroup();
-                break;
-            default:
-                System.out.println("Bạn muốn dừng tìm kiếm ?");
-                System.out.println("Chọn Y(thoát) / khác(quay lại)");
 
-                switch (toUpperCase(sc.nextLine())){
-                    case "Y":
-                        break;
-                    default:
-                        searchContact();
-                }
-        }
-    }
 
-    public void search1Contact(){
+    public void searchContact(){
         System.out.println("*-- TÌM KIẾM DANH BẠ --*");
         System.out.println("Nhập chuỗi tìm kiếm (tên hoặc nhóm hoặc SĐT hoặc email): ");
         boolean check = false;
@@ -80,25 +55,6 @@ public class ContactService {
         }
     }
 
-    public void searchContactByPhoneNumber() {
-        boolean check = false;
-        int count = 0;
-        System.out.println("Nhập số ĐT tìm kiếm(xxx.xxx.xxxx): ");
-        String phoneNumber = sc.nextLine();
-        for (Contact ct: contactDB.contactList) {
-            if(ct.getPhoneNumber().contains(phoneNumber)){
-                check = true;
-                if(++count == 1){
-                    displayHeader();
-                }
-                ct.displayContact();
-            }
-        }
-        if(!check){
-            System.out.println("Không tìm thấy số ĐT !");
-        }
-    }
-
 
     // chuyển chuỗi có dấu sang chuỗi không dấu
     public String removeAccent(String s) {
@@ -109,50 +65,6 @@ public class ContactService {
     }
 
 
-    public void searchContactByName() {
-        boolean check = false;
-        System.out.println("Nhập tên tìm kiếm: ");
-        int count = 0;
-        String name = removeAccent(toLowerCase(sc.nextLine()));
-
-        for (Contact ct: contactDB.contactList) {
-            String temp = removeAccent(toLowerCase(ct.getFullName()));
-            if(temp.contains(name) ){
-                check = true;
-                count ++;
-                if(count == 1){
-                    displayHeader();
-                }
-                ct.displayContact();
-
-            }
-        }
-        if(!check){
-            System.out.println("Không tìm thấy trong danh bạ !");
-        }
-    }
-
-    public void searchContactByGroup(){
-        boolean check = false;
-        System.out.println("Nhập tên nhóm tìm kiếm: ");
-        String nameGroup = removeAccent(toLowerCase(sc.nextLine()));
-        int count = 0;
-        for (Contact ct: contactDB.contactList) {
-            String temp = removeAccent(toLowerCase(ct.getContactGroup()));
-            if( temp.contains(nameGroup)){
-                check = true;
-                count++;
-                if(count == 1) {
-                    displayHeader();
-                }
-                ct.displayContact();
-
-            }
-        }
-        if(!check){
-            System.out.println("Không tìm thấy trong danh bạ !");
-        }
-    }
 
 
     public void deleteContact() {
