@@ -193,7 +193,7 @@ public class ContactService {
 
 
     public boolean checkPhoneNumber(String phoneNumber){
-        String regex = "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])+.+[0-9]{3}+.+[0-9]{4}$";
+        String regex = "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9]).[0-9]{3}.[0-9]{4}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.find()? true:false;
@@ -276,7 +276,7 @@ public class ContactService {
             email = sc.nextLine();
             if(checkEmailExists(email)){
                 System.out.println("* Bạn muốn thêm email này ! *");
-                System.out.println("Y(tiếp tục) / khác(bỏ qua)");
+                System.out.println("Y(tiếp tục) / khác(nhập lại)");
                 switch (toUpperCase(sc.nextLine())){
                     case "Y":
                         break;
@@ -288,6 +288,7 @@ public class ContactService {
 
         return email;
     }
+
 
     public boolean checkEmailExists(String email){
         for (Contact ct: contactDB.contactList) {
@@ -328,9 +329,9 @@ public class ContactService {
 
     public String toLowerCase(String string) {
         char[] charArray = string.toCharArray();
-        for (int i = 0; i < charArray.length; i++)
+        for (int i = 0; i < charArray.length; i++) {
             charArray[i] = Character.toLowerCase(charArray[i]);
-
+        }
         String outputString = String.valueOf(charArray);
         return outputString;
 

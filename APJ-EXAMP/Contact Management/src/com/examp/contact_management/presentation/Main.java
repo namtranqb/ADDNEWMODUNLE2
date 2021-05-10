@@ -29,8 +29,7 @@ public class Main {
         System.out.println("\t4. Xóa");
         System.out.println("\t5. Tìm kiếm");
         System.out.println("\t6. Đọc từ file");
-        System.out.println("\t7. Ghi vào file");
-        System.out.println("\t8. Thoát");
+        System.out.println("\t0. Thoát");
         System.out.println("--------------------------------------");
 
     }
@@ -66,12 +65,7 @@ public class Main {
                 contactService.readFromFile();
                 chooseYN();
                 break;
-            case "7":
-                contactService.writeToFile();
-                System.out.println("Danh bạ vừa được cập nhật !");
-                chooseYN();
-                break;
-            case "8":
+            case "0":
                 System.exit(0);
             default:
                 System.out.println("Nhập sai !");
