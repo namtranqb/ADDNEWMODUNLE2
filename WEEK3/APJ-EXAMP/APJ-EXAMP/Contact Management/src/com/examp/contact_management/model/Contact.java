@@ -13,6 +13,15 @@ public class Contact {
     public Contact() {
     }
 
+    public Contact(String phoneNumber, String contactGroup, String fullName, String gender, String dob, String address, String email) {
+        this.phoneNumber = phoneNumber;
+        this.contactGroup = contactGroup;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.address = address;
+        this.dob = dob;
+        this.email = email;
+    }
 
     public Contact(int rollNo, String phoneNumber, String contactGroup, String fullName, String gender,String dob, String address, String email) {
         this.rollNo = rollNo;
@@ -92,9 +101,7 @@ public class Contact {
     public String toStringCSV(){
         return rollNo+","+phoneNumber+","+contactGroup+","+fullName+","+gender+","+dob+","+address+","+email+"\n";
     }
-    public String toStringHeaderCSV(){
-        return "STT"+","+"Số ĐT"+","+"Nhóm danh bạ"+","+"Họ tên"+","+"Giới tính"+","+"Ngày sinh"+","+"Địa chỉ"+","+"Email"+"\n";
-    }
+
     public void displayContact(){
         System.out.printf("|| %12s | %20s | %30s | %10s | %11s | %30s | %25s ||",phoneNumber,contactGroup,fullName,gender,dob,address,email);
         System.out.println();

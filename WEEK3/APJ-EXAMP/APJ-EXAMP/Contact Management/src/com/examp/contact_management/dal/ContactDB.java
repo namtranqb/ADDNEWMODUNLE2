@@ -29,11 +29,7 @@ public class ContactDB {
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(CONTACT_FILE));
             countContact = 0;
-
             for (Contact ct:contactList) {
-                if(countContact == 0){
-                    bufferedWriter.write(ct.toStringHeaderCSV());
-                }
                 ct.setRollNo(++countContact);
                 bufferedWriter.write(ct.toStringCSV());
             }
@@ -70,7 +66,7 @@ public class ContactDB {
             bufferedReader = new BufferedReader(new FileReader(CONTACT_FILE));
             String line ;
             while ((line = bufferedReader.readLine()) != null){
-                if(line.isEmpty() || (line.contains("STT")&&line.contains("Họ tên")&&line.contains("Số ĐT"))){
+                if(line.isEmpty()){
                     continue;
                 }
 
