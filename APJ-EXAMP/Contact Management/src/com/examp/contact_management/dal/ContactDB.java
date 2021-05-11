@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ContactDB {
 
-    final String CONTACT_FILE ="D:\\CODEGYM\\MODUNLE2\\APJ-EXAMP\\Contact Management\\data\\contact.csv";
+    final String CONTACT_FILE ="data/contact.csv";
     File file = new File(CONTACT_FILE);
     public List<Contact> contactList = new ArrayList<>();
     int countContact = 0;
@@ -67,7 +67,7 @@ public class ContactDB {
             bufferedReader = new BufferedReader(new FileReader(CONTACT_FILE));
             String line ;
             while ((line = bufferedReader.readLine()) != null){
-                if(line.isEmpty() || (line.contains("STT")&&line.contains("Họ tên")&&line.contains("Số ĐT"))&&line.contains("Nhóm Danh Bạ")){
+                if(line.isEmpty() || (line.contains("STT")&&line.contains("Họ tên")&&line.contains("Số ĐT"))){
                     continue;
                 }
 
